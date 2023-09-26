@@ -1,5 +1,4 @@
 /* Create an array named products which you will use to add all of your product object literals that you create in the next step. */
-let products = ["cherry","orange","stawberry"]
 /* Create 3 or more product objects using object literal notation 
    Each product should include five properties
    - name: name of product (string)
@@ -8,27 +7,30 @@ let products = ["cherry","orange","stawberry"]
    - productId: unique id for the product (number)
    - image: picture of product (url string)
 */
-const cherry = {
-  name:"cherry",
-  price:1,
-  quantity:0,
-  productId:4001,
-  image:"./image/cherry.jpg"
-}
-const orange = {
+products= [
+  {
+    name:"cherry",
+    price:1,
+    quantity:0,
+    productId:4001,
+    image:"images/cherry.jpg"
+  },
+  {
   name:"orange",
   price:2,
   quantity:0,
   productId:4002,
-  image:"./image/orange.jpg"
-}
-const stawberry = {
+  image:"images/orange.jpg"
+  },
+  {
   name:"stawberry",
   price:3,
   quantity:0,
   productId:4003,
-  image:"./image/stawberry.jpg"
-}
+  image:"images/strawberry.jpg"
+  }
+]
+console.log(this.products[0].productId)
 /* Images provided in /images folder. All images from Unsplash.com
    - cherry.jpg by Mae Mu
    - orange.jpg by Mae Mu
@@ -44,17 +46,18 @@ let cart = []
 */
 function addProductToCart(productId) {
   let theproduct
-  if (productId === cherry.productId) {
-    theproduct = cherry
-  }else if (productId === orange.productId){
-    theproduct = orange
-  }else if (productId === stawberry.productId){
-    theproduct = stawberry
+  if (productId === products[0].productId) {
+    theproduct = products[0]
+  }else if (productId === products[1].productId){
+    theproduct = products[1]
+  }else if (productId === products[2].productId){
+    theproduct = products[2]
   }
 
   increaseQuantity(productId)
   if (cart.indexOf(theproduct) === -1) {
     cart.push(theproduct)
+  }
 }
 /* Create a function named increaseQuantity that takes in the productId as an argument
   - increaseQuantity should get the correct product based on the productId
@@ -62,15 +65,16 @@ function addProductToCart(productId) {
 */
 function increaseQuantity(productId) {
   let theproduct
-  if (productId === cherry.productId) {
-    theproduct = cherry
-  }else if (productId === orange.productId){
-    theproduct = orange
-  }else if (productId === stawberry.productId){
-    theproduct = stawberry
+  if (productId === products[0].productId) {
+    theproduct = products[0]
+    products[0].quantity += 1
+  }else if (productId === products[1].productId){
+    theproduct = products[1]
+    products[1].quantity += 1
+  }else if (productId === products[2].productId){
+    theproduct = products[2]
+    products[2].quantity += 1
   }
-
-  theproduct.quantity += 1
 }
 
 /* Create a function named decreaseQuantity that takes in the productId as an argument
@@ -80,17 +84,24 @@ function increaseQuantity(productId) {
 */
 function decreaseQuantity(productId) {
   let theproduct
-  if (productId === cherry.productId) {
-    theproduct = cherry
-  }else if (productId === orange.productId){
-    theproduct = orange
-  }else if (productId === stawberry.productId){
-    theproduct = stawberry
-  }
-
-  theproduct.quantity -= 1
-  if (theproduct.quantity === 0) {
-    removeProductFromCart(productId)
+  if (productId === products[0].productId) {
+    theproduct = products[0]
+    products[0].quantity -= 1
+    if (products[0].quantity === 0) {
+      removeProductFromCart(productId)
+    }
+  }else if (productId === products[1].productId){
+    theproduct = products[1]
+    products[1].quantity -= 1
+    if (products[1].quantity === 0) {
+      removeProductFromCart(productId)
+    }
+  }else if (productId === products[2].productId){
+    theproduct = products[2]
+    products[2].quantity -= 1
+    if (products[2].quantity === 0) {
+      removeProductFromCart(productId)
+    }
   }
 }
 
@@ -101,15 +112,17 @@ function decreaseQuantity(productId) {
 */
 function removeProductFromCart(productId) {
   let theproduct
-  if (productId === cherry.productId) {
-    theproduct = cherry
-  }else if (productId === orange.productId){
-    theproduct = orange
-  }else if (productId === stawberry.productId){
-    theproduct = stawberry
+  if (productId === products[0].productId) {
+    theproduct = products[0]
+    products[0].quantity === 0
+  }else if (productId === products[1].productId){
+    theproduct = products[1]
+    products[1].quantity === 0
+  }else if (productId === products[2].productId){
+    theproduct = products[2]
+    products[2].quantity === 0
   }
 
-  theproduct.quantity === 0
   cart = cart.filter(item => item !== theproduct);
 }
 
@@ -122,7 +135,7 @@ function cartTotal() {
   for (let index = 0; index < cart.length; index++) {
     totalprice += cart[index].quantity * cart[index].price;
   }
-  return totalprice
+  return Number(totalprice)
 }
 
 /* Create a function called emptyCart that empties the products from the cart */
