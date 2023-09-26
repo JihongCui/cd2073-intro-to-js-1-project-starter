@@ -30,7 +30,6 @@ products= [
   image:"images/strawberry.jpg"
   }
 ]
-console.log(this.products[0].productId)
 /* Images provided in /images folder. All images from Unsplash.com
    - cherry.jpg by Mae Mu
    - orange.jpg by Mae Mu
@@ -46,13 +45,14 @@ let cart = []
 */
 function addProductToCart(productId) {
   let theproduct
-  if (productId === products[0].productId) {
-    theproduct = products[0]
-  }else if (productId === products[1].productId){
-    theproduct = products[1]
-  }else if (productId === products[2].productId){
-    theproduct = products[2]
+  for (let index = 0; index < products.length; index++) {
+    if (productId === products[index].productId) {
+      theproduct = products[index]
+      break
+    }
   }
+  //I looked up the difinition of Array some, but the result of array some is True/False.
+  //In here I need to locate the right productID rather than having True/False value.
 
   increaseQuantity(productId)
   if (cart.indexOf(theproduct) === -1) {
@@ -65,15 +65,12 @@ function addProductToCart(productId) {
 */
 function increaseQuantity(productId) {
   let theproduct
-  if (productId === products[0].productId) {
-    theproduct = products[0]
-    products[0].quantity += 1
-  }else if (productId === products[1].productId){
-    theproduct = products[1]
-    products[1].quantity += 1
-  }else if (productId === products[2].productId){
-    theproduct = products[2]
-    products[2].quantity += 1
+  for (let index = 0; index < products.length; index++) {
+    if (productId === products[index].productId) {
+      theproduct = products[index]
+      products[index].quantity += 1
+      break
+    }
   }
 }
 
@@ -84,23 +81,18 @@ function increaseQuantity(productId) {
 */
 function decreaseQuantity(productId) {
   let theproduct
-  if (productId === products[0].productId) {
-    theproduct = products[0]
-    products[0].quantity -= 1
-    if (products[0].quantity === 0) {
-      removeProductFromCart(productId)
-    }
-  }else if (productId === products[1].productId){
-    theproduct = products[1]
-    products[1].quantity -= 1
-    if (products[1].quantity === 0) {
-      removeProductFromCart(productId)
-    }
-  }else if (productId === products[2].productId){
-    theproduct = products[2]
-    products[2].quantity -= 1
-    if (products[2].quantity === 0) {
-      removeProductFromCart(productId)
+  //I can use the map function to go through the whole array,
+  //however I looked up some information and found the map function cannot contain an if function.
+  //I need the if function to locate the right productID
+  for (let index = 0; index < products.length; index++) {
+    if (productId === products[index].productId) {
+      theproduct = products[index]
+      products[index].quantity += 1
+      products[index].quantity -= 1
+      if (products[index].quantity === 0) {
+        removeProductFromCart(productId)
+      }
+      break
     }
   }
 }
@@ -112,17 +104,13 @@ function decreaseQuantity(productId) {
 */
 function removeProductFromCart(productId) {
   let theproduct
-  if (productId === products[0].productId) {
-    theproduct = products[0]
-    products[0].quantity === 0
-  }else if (productId === products[1].productId){
-    theproduct = products[1]
-    products[1].quantity === 0
-  }else if (productId === products[2].productId){
-    theproduct = products[2]
-    products[2].quantity === 0
+  for (let index = 0; index < products.length; index++) {
+    if (productId === products[index].productId) {
+      theproduct = products[index]
+      products[index].quantity = 0
+      break
+    }
   }
-
   cart = cart.filter(item => item !== theproduct);
 }
 
@@ -131,12 +119,12 @@ function removeProductFromCart(productId) {
   - cartTotal should return the sum of the products in the cart
 */
 function cartTotal() {
-  let totalprice
+  let totalprice = 0
   for (let index = 0; index < cart.length; index++) {
     totalprice += cart[index].quantity * cart[index].price;
   }
-  return Number(totalprice)
-}
+  return totalprice
+} 
 
 /* Create a function called emptyCart that empties the products from the cart */
 function emptyCart() {
