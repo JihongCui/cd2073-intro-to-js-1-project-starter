@@ -135,7 +135,7 @@ function cartTotal() {
   for (let index = 0; index < cart.length; index++) {
     totalprice += cart[index].quantity * cart[index].price;
   }
-  return Number(totalprice)
+  return totalprice
 }
 
 /* Create a function called emptyCart that empties the products from the cart */
