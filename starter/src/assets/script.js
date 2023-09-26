@@ -30,7 +30,6 @@ products= [
   image:"images/strawberry.jpg"
   }
 ]
-console.log(this.products[0].productId)
 /* Images provided in /images folder. All images from Unsplash.com
    - cherry.jpg by Mae Mu
    - orange.jpg by Mae Mu
@@ -45,18 +44,19 @@ let cart = []
   - if the product is not already in the cart, add it to the cart
 */
 function addProductToCart(productId) {
-  let theproduct
-  if (productId === products[0].productId) {
-    theproduct = products[0]
-  }else if (productId === products[1].productId){
-    theproduct = products[1]
-  }else if (productId === products[2].productId){
-    theproduct = products[2]
+  let theProduct
+  for (let index = 0; index < products.length; index++) {
+    if (productId === products[index].productId) {
+      theProduct = products[index]
+      break
+    }
   }
+  //I looked up the difinition of Array some, but the result of array some is True/False.
+  //In here I need to locate the right productID rather than having True/False value.
 
   increaseQuantity(productId)
-  if (cart.indexOf(theproduct) === -1) {
-    cart.push(theproduct)
+  if (cart.indexOf(theProduct) === -1) {
+    cart.push(theProduct)
   }
 }
 /* Create a function named increaseQuantity that takes in the productId as an argument
@@ -64,16 +64,11 @@ function addProductToCart(productId) {
   - increaseQuantity should then increase the product's quantity
 */
 function increaseQuantity(productId) {
-  let theproduct
-  if (productId === products[0].productId) {
-    theproduct = products[0]
-    products[0].quantity += 1
-  }else if (productId === products[1].productId){
-    theproduct = products[1]
-    products[1].quantity += 1
-  }else if (productId === products[2].productId){
-    theproduct = products[2]
-    products[2].quantity += 1
+  for (let index = 0; index < products.length; index++) {
+    if (productId === products[index].productId) {
+      products[index].quantity += 1
+      break
+    }
   }
 }
 
@@ -83,24 +78,16 @@ function increaseQuantity(productId) {
   - if the function decreases the quantity to 0, the product is removed from the cart
 */
 function decreaseQuantity(productId) {
-  let theproduct
-  if (productId === products[0].productId) {
-    theproduct = products[0]
-    products[0].quantity -= 1
-    if (products[0].quantity === 0) {
-      removeProductFromCart(productId)
-    }
-  }else if (productId === products[1].productId){
-    theproduct = products[1]
-    products[1].quantity -= 1
-    if (products[1].quantity === 0) {
-      removeProductFromCart(productId)
-    }
-  }else if (productId === products[2].productId){
-    theproduct = products[2]
-    products[2].quantity -= 1
-    if (products[2].quantity === 0) {
-      removeProductFromCart(productId)
+  //I can use the map function to go through the whole array,
+  //however I looked up some information and found the map function cannot contain an if function.
+  //I need the if function to locate the right productID
+  for (let index = 0; index < products.length; index++) {
+    if (productId === products[index].productId) {
+      products[index].quantity -= 1
+      if (products[index].quantity === 0) {
+        removeProductFromCart(productId)
+      }
+      break
     }
   }
 }
@@ -111,19 +98,15 @@ function decreaseQuantity(productId) {
   - removeProductFromCart should remove the product from the cart
 */
 function removeProductFromCart(productId) {
-  let theproduct
-  if (productId === products[0].productId) {
-    theproduct = products[0]
-    products[0].quantity === 0
-  }else if (productId === products[1].productId){
-    theproduct = products[1]
-    products[1].quantity === 0
-  }else if (productId === products[2].productId){
-    theproduct = products[2]
-    products[2].quantity === 0
+  let theProduct
+  for (let index = 0; index < products.length; index++) {
+    if (productId === products[index].productId) {
+      theProduct = products[index]
+      products[index].quantity = 0
+      break
+    }
   }
-
-  cart = cart.filter(item => item !== theproduct);
+  cart = cart.filter(item => item !== theProduct);
 }
 
 /* Create a function named cartTotal that has no parameters
@@ -131,12 +114,20 @@ function removeProductFromCart(productId) {
   - cartTotal should return the sum of the products in the cart
 */
 function cartTotal() {
-  let totalprice
+  let totalprice = 0
   for (let index = 0; index < cart.length; index++) {
     totalprice += cart[index].quantity * cart[index].price;
   }
+<<<<<<< HEAD
+  return totalprice
+} 
+||||||| e17cddd
+  return Number(totalprice)
+}
+=======
   return totalprice
 }
+>>>>>>> 8c2895a14e82bedc41f9a79a28c813701fef4989
 
 /* Create a function called emptyCart that empties the products from the cart */
 function emptyCart() {
