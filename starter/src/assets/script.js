@@ -118,8 +118,24 @@ function cartTotal() {
   for (let index = 0; index < cart.length; index++) {
     totalprice += cart[index].quantity * cart[index].price;
   }
+<<<<<<< HEAD
   return totalprice
 } 
+||||||| e17cddd
+  return Number(totalprice)
+}
+=======
+<<<<<<< HEAD
+  return totalprice
+} 
+||||||| e17cddd
+  return Number(totalprice)
+}
+=======
+  return totalprice
+}
+>>>>>>> 8c2895a14e82bedc41f9a79a28c813701fef4989
+>>>>>>> f3335c72eb55647f6e03453b29bca7f4a7702c59
 
 /* Create a function called emptyCart that empties the products from the cart */
 function emptyCart() {
