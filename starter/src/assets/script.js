@@ -49,7 +49,7 @@ function getProductByIdFromList(productId, productList) {
 */
 function addProductToCart(productId) {
   let theProduct = getProductByIdFromList(productId, products)
-  increaseQuantity(productId)
+  theProduct.quantity += 1
   if (!cart.includes(theProduct)) {
   // if (cart.indexOf(theProduct) === -1) {
     cart.push(theProduct);
