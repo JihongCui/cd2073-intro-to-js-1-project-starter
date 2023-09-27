@@ -44,16 +44,7 @@ let cart = []
   - if the product is not already in the cart, add it to the cart
 */
 function addProductToCart(productId) {
-  let theProduct
-  for (let index = 0; index < products.length; index++) {
-    if (productId === products[index].productId) {
-      theProduct = products[index]
-      break
-    }
-  }
-  //I looked up the difinition of Array some, but the result of array some is True/False.
-  //In here I need to locate the right productID rather than having True/False value.
-
+  let theProduct = getProductByIdFromList(productId, products)
   increaseQuantity(productId)
   if (cart.indexOf(theProduct) === -1) {
     cart.push(theProduct)
