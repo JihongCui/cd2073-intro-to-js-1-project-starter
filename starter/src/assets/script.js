@@ -7,7 +7,7 @@
    - productId: unique id for the product (number)
    - image: picture of product (url string)
 */
-products= [
+let products= [
   {
     name:"cherry",
     price:1,
@@ -17,14 +17,14 @@ products= [
   },
   {
   name:"orange",
-  price:2,
+  price:10,
   quantity:0,
   productId:4002,
   image:"images/orange.jpg"
   },
   {
   name:"stawberry",
-  price:3,
+  price:100,
   quantity:0,
   productId:4003,
   image:"images/strawberry.jpg"
@@ -38,6 +38,10 @@ products= [
 
 /* Declare an empty array named cart to hold the items in the cart */
 let cart = []
+
+function getProductByIdFromList(productId, productList) {
+  return productList.find((product) => product.productId === productId)
+}
 /* Create a function named addProductToCart that takes in the product productId as an argument
   - addProductToCart should get the correct product based on the productId
   - addProductToCart should then increase the product's quantity
@@ -46,8 +50,9 @@ let cart = []
 function addProductToCart(productId) {
   let theProduct = getProductByIdFromList(productId, products)
   increaseQuantity(productId)
-  if (cart.indexOf(theProduct) === -1) {
-    cart.push(theProduct)
+  if (!cart.includes(theProduct)) {
+  // if (cart.indexOf(theProduct) === -1) {
+    cart.push(theProduct);
   }
 }
 /* Create a function named increaseQuantity that takes in the productId as an argument
@@ -55,12 +60,8 @@ function addProductToCart(productId) {
   - increaseQuantity should then increase the product's quantity
 */
 function increaseQuantity(productId) {
-  for (let index = 0; index < products.length; index++) {
-    if (productId === products[index].productId) {
-      products[index].quantity += 1
-      break
-    }
-  }
+  let theProduct = getProductByIdFromList(productId, cart)
+  theProduct.quantity += 1
 }
 
 /* Create a function named decreaseQuantity that takes in the productId as an argument
@@ -69,17 +70,10 @@ function increaseQuantity(productId) {
   - if the function decreases the quantity to 0, the product is removed from the cart
 */
 function decreaseQuantity(productId) {
-  //I can use the map function to go through the whole array,
-  //however I looked up some information and found the map function cannot contain an if function.
-  //I need the if function to locate the right productID
-  for (let index = 0; index < products.length; index++) {
-    if (productId === products[index].productId) {
-      products[index].quantity -= 1
-      if (products[index].quantity === 0) {
-        removeProductFromCart(productId)
-      }
-      break
-    }
+  let theProduct = getProductByIdFromList(productId,cart)
+  theProduct.quantity -= 1
+  if (theProduct.quantity === 0) {
+    removeProductFromCart(theProduct.productId)
   }
 }
 
@@ -89,15 +83,9 @@ function decreaseQuantity(productId) {
   - removeProductFromCart should remove the product from the cart
 */
 function removeProductFromCart(productId) {
-  let theProduct
-  for (let index = 0; index < products.length; index++) {
-    if (productId === products[index].productId) {
-      theProduct = products[index]
-      products[index].quantity = 0
-      break
-    }
-  }
-  cart = cart.filter(item => item !== theProduct);
+  let theProduct = getProductByIdFromList(productId,cart)
+  theProduct.quantity = 0
+  cart.splice(cart.indexOf(theProduct),1)
 }
 
 /* Create a function named cartTotal that has no parameters
@@ -105,24 +93,34 @@ function removeProductFromCart(productId) {
   - cartTotal should return the sum of the products in the cart
 */
 function cartTotal() {
-  let totalprice = 0
-  for (let index = 0; index < cart.length; index++) {
-    totalprice += cart[index].quantity * cart[index].price;
-  }
-  return totalprice
+  let total = 0
+  cart.forEach(product => {
+    total += product.quantity * product.price
+  })
+  return total
 }
 
 
 /* Create a function called emptyCart that empties the products from the cart */
 function emptyCart() {
-  cart.splice(0, cart.length)
+  cart.forEach(function (product) {
+    removeProductFromCart(product.productId);
+  })
 }
 /* Create a function named pay that takes in an amount as an argument
   - pay will return a negative number if there is a remaining balance
   - pay will return a positive number if money should be returned to customer
 */
+let totalPaid = 0
+
 function pay(amount) {
-  return Number(amount - cartTotal())
+  totalPaid += amount
+  let remaining = totalPaid - cartTotal()
+  if (remaining >= 0) {
+    totalPaid = 0
+    emptyCart()
+  }
+  return remaining
 }
 
 /* Place stand out suggestions here (stand out suggestions can be found at the bottom of the project rubric.)*/
